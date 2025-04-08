@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Nova Capacidade das seções do Estoque por tipo de produto</title>
+</head>
+<body>
+    <div th:insert="~{panel}"></div>
+
+    <div style="margin: 0 30px 0 30px;">
+        <h1>Nova Capacidade das seções do Estoque por tipo de produto</h1>
+        <br>
+
+        <form
+          th:action="@{/panel/stock-session-capacity-by-kind/new}"
+          method="post"
+          th:object="${stockSessionCapacityByKind}">
+
+            <div class="row">
+                <div class="col-3 mb-6">
+                    <label for="productKind">Tipo do Produto</label>
+                    <select id="productKind" name="productKind" class="form-control">
+                        <option value="">Selecione</option>
+                        <option
+                            th:each="productKind : ${productKinds}"
+                            th:value="${productKind.id}"
+                            th:text="${productKind.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2 mb-6">
+                    <label for="capacityLiters" class="col-form-label">
+                        Capacidade em Litros
+                    </label>
+                    <input
+                        type="text" class="form-control"
+                        name="capacityLiters" id="capacityLiters"
+                        th:field="*{capacityLiters}" required>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="mb-6">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a
+                        class="btn btn-warning"
+                        th:href="@{/panel/stock-session-capacity-by-kind}">
+                        Cancelar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    </script>
+</body>
+</html>

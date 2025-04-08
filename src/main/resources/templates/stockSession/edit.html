@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Seção do Estoque</title>
+</head>
+<body>
+    <div th:insert="~{panel}"></div>
+
+    <h1>Editar Seção do Estoque</h1>
+    <form
+      th:action="@{/panel/stock-session/edit/{id}(id=${stockSession.id})}"
+      method="post"
+      th:object="${stockSession}">
+      <div class="row" style="margin: 0 30px 0 30px;">
+
+            <div class="col-6 mb-6">
+                <label for="name" class="col-form-label">
+                    Nome
+                </label>
+                <input
+                    type="text" class="form-control"
+                    name="name" id="name"
+                    th:field="*{name}" required>
+            </div>
+
+            <div class="col-2 mb-6">
+                <label for="createdAt" class="col-form-label">
+                    Data Criação
+                </label>
+                <input
+                    type="text" class="form-control"
+                    name="createdAt" id="createdAt"
+                    th:field="*{createdAt}" readonly>
+            </div>
+
+            <div class="mb-6">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a class="btn btn-warning" th:href="@{/panel/stock-session}">
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script>
+    </script>
+</body>
+</html>

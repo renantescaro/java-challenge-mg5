@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem de Produto</title>
+</head>
+
+<body>
+    <div th:insert="~{panel}"></div>
+    <div>
+        <h2>Listagem de Produto</h2>
+    </div>
+    <br><br>
+
+    <a class="btn btn-primary" href="/panel/product/new">
+        Novo Produto +
+    </a>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Tipo do Produto</th>
+                <th>Preço</th>
+                <th>Volume em Litros</th>
+                <th>Data Criação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${products}">
+                <td th:text="${item.id}">Código</td>
+                <td th:text="${item.name}">Nome</td>
+                <td th:text="${item.productKind.name}">Tipo do Produto</td>
+                <td th:text="${item.price}">Preço</td>
+                <td th:text="${item.volumeLiters}">Volume em Litros</td>
+                <td th:text="${item.createdAt}">Data Criação</td>
+                <td>
+                    <a
+                        class="btn btn-primary"
+                        th:href="@{/panel/product/edit/{id}(id=${item.id})}">
+                        Editar
+                    </a>
+                    <form
+                        th:id="'delete-form-' + ${item.id}"
+                        th:action="@{/panel/product/delete/{id}(id=${item.id})}"
+                        method="post" style="display: inline;">
+                        <button
+                            type="button" class="btn btn-danger"
+                            th:onclick="'confirmDelete(' + ${item.id} + ')'">
+                            Apagar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${#lists.isEmpty(products)}">
+        Nenhuma produto encontrada.
+    </p>
+
+    <script>
+        function confirmDelete(itemId) {
+            if (confirm("Tem certeza que deseja apagar esta produto?")) {
+                document.getElementById("delete-form-" + itemId).submit();
+            }
+        }
+    </script>
+</body>
+
+</html>

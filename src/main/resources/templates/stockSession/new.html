@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Seção do Estoque</title>
+</head>
+
+<body>
+    <div th:insert="~{panel}"></div>
+
+    <h1>Nova Seção do Estoque</h1>
+    <form
+        th:action="@{/panel/stock-session/new}"
+        method="post" th:object="${stockSession}"
+        style="margin: 0 30px 0 30px;">
+        <div class="row">
+            <div class="col-6 mb-6">
+                <label for="name" class="col-form-label">
+                    Nome
+                </label>
+                <input
+                    type="text" class="form-control"
+                    name="name" id="name"
+                    th:field="*{name}" required>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-2 mb-6">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a class="btn btn-warning" th:href="@{/panel/stock-session}">
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script>
+    </script>
+</body>
+
+</html>

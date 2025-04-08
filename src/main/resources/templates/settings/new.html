@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Nova Requisições de Delivery</title>
+</head>
+<body>
+    <div th:insert="~{panel}"></div>
+
+    <h1>Nova Requisições de Delivery</h1>
+    <form
+        th:action="@{/panel/settings/new}"
+        method="post"
+        th:object="${settings}">
+        <div class="row" style="margin: 0 30px 0 30px;">
+
+            <div class="col-3 mb-6">
+                <label for="hash" class="col-form-label">
+                    Hash
+                </label>
+                <input
+                    type="text" class="form-control"
+                    name="hash" id="hash"
+                    th:field="*{hash}" required>
+            </div>
+            <div class="col-3 mb-6">
+                <label for="value" class="col-form-label">
+                    Valor
+                </label>
+                <input
+                    type="text" class="form-control"
+                    name="value" id="value"
+                    th:field="*{value}" required>
+            </div>
+
+            <div class="mb-6">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a class="btn btn-warning" th:href="@{/panel/settings}">
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script>
+    </script>
+</body>
+</html>

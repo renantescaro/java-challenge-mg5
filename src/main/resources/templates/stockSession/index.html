@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem de Seção do Estoque</title>
+</head>
+
+<body>
+    <div th:insert="~{panel}"></div>
+    
+    <div style="margin: 15px;">
+        <div>
+            <h2>Listagem de Seção do Estoque</h2>
+        </div>
+        <br><br>
+
+        <a
+            class="btn btn-primary"
+            href="/panel/stock-session/new">
+            Nova Seção do Estoque +
+        </a>
+        <br>
+    
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Data Criação</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${stockSessions}">
+                    <td th:text="${item.id}">Código</td>
+                    <td th:text="${item.name}">Nome</td>
+                    <td th:text="${item.createdAt}">Data Criação</td>
+                    <td>
+                        <a
+                            class="btn btn-primary"
+                            th:href="@{/panel/stock-session/edit/{id}(id=${item.id})}">
+                            Editar
+                        </a>
+                        <form
+                            th:id="'delete-form-' + ${item.id}"
+                            th:action="@{/panel/stock-session/delete/{id}(id=${item.id})}"
+                            style="display: inline;" method="post">
+                            <button
+                                type="button"
+                                class="btn btn-danger"
+                                th:onclick="'confirmDelete(' + ${item.id} + ')'">
+                                Apagar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <p th:if="${#lists.isEmpty(stockSessions)}">
+            Nenhuma Seção do estoque encontrada.
+        </p>
+    </div>
+
+    <script>
+        function confirmDelete(itemId) {
+            if (confirm("Tem certeza que deseja apagar esta seção do estoque?")) {
+                document.getElementById("delete-form-" + itemId).submit();
+            }
+        }
+    </script>
+</body>
+
+</html>

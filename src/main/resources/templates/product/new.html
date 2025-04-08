@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Produto</title>
+</head>
+
+<body>
+    <div th:insert="~{panel}"></div>
+
+    <h1>Nova Produto</h1>
+    <form th:action="@{/panel/product/new}" method="post" th:object="${Product}">
+        <div class="row" style="margin: 0 30px 0 30px;">
+
+            <div class="mb-6">
+                <label for="name" class="col-form-label">
+                    Nome
+                </label>
+                <input
+                    type="text" class="form-control"
+                    name="name" id="name"
+                    th:field="*{name}" required>
+            </div>
+
+            <div class="mb-6">
+                <label for="productKind">Tipo do Produto</label>
+                <select id="productKind" name="productKind" class="form-control">
+                    <option value="">Selecione</option>
+                    <option
+                        th:each="productKind : ${productKinds}"
+                        th:value="${productKind.id}"
+                        th:text="${productKind.name}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label for="price" class="col-form-label">
+                    Preço
+                </label>
+                <input
+                    type="text" class="form-control"
+                    name="price" id="price" th:field="*{price}" required>
+            </div>
+
+            <div class="mb-6">
+                <label for="volumeLiters" class="col-form-label">
+                    Volume em Litros
+                </label>
+                <input
+                    type="text" class="form-control"
+                    name="volumeLiters" id="volumeLiters"
+                    th:field="*{volumeLiters}" required>
+            </div>
+
+            <div class="mb-6">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a class="btn btn-warning" th:href="@{/panel/product}">
+                    Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script>
+    </script>
+</body>
+
+</html>
