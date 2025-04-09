@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuários</title>
+</head>
+<body>
+    <div th:insert="~{panel}"></div>
+
+
+    <div style="margin: 0 30px 0 30px;">
+        <h1>Nova movimentação de estoque</h1>
+        <br>
+        <form
+            th:action="@{/panel/stock-entry/new}"
+            method="post"
+            th:object="${stockEntry}">
+    
+            <div class="row">
+                <div class="col-3 mb-6">
+                    <label for="product">Produto</label>
+                    <select id="product" name="product" class="form-control">
+                        <option value="">Selecione</option>
+                        <option
+                            th:each="product : ${products}"
+                            th:value="${product.id}"
+                            th:text="${product.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-3 mb-6">
+                    <label for="quantity" class="col-form-label">
+                        Quantidade
+                    </label>
+                    <input
+                        type="number" class="form-control"
+                        name="quantity" id="quantity"
+                        th:field="*{quantity}" required>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-3 mb-6">
+                    <label for="stockSession">Seção do Estoque</label>
+                    <select id="stockSession" name="stockSession" class="form-control">
+                        <option value="">Seção do Estoque</option>
+                        <option
+                            th:each="stockSession : ${stockSessions}"
+                            th:value="${stockSession.id}"
+                            th:text="${stockSession.name}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-3 mb-6">
+                    <label for="kind">Tipo de Movimentaça</label>
+                    <select id="kind" name="kind" class="form-control">
+                        <option value="">Seção do Estoque</option>
+                        <option
+                            th:each="kind : ${stockKinds}"
+                            th:text="${kind}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-2 mb-6">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a class="btn btn-warning" th:href="@{/panel/stock-entry}">
+                        Cancelar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

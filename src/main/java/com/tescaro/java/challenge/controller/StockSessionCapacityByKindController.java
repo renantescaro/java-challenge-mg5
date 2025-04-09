@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class StockSessionCapacityByKindController {
 
     private final ProductKindRepository productKindRepository;
-
     private final StockSessionCapacityByKindRepository stockSessionCapacityByKindRepository;
 
     public StockSessionCapacityByKindController(
-            StockSessionCapacityByKindRepository stockSessionCapacityByKindRepository, ProductKindRepository productKindRepository) {
+            StockSessionCapacityByKindRepository stockSessionCapacityByKindRepository,
+            ProductKindRepository productKindRepository) {
         this.stockSessionCapacityByKindRepository = stockSessionCapacityByKindRepository;
         this.productKindRepository = productKindRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String listRender(Model model) {
-        List<StockSessionCapacityByKind> StockSessionCapacityByKinds = stockSessionCapacityByKindRepository.findAll();
-        model.addAttribute("stockSessionCapacityByKinds", StockSessionCapacityByKinds);
+        List<StockSessionCapacityByKind> stockSessionCapacityByKinds = stockSessionCapacityByKindRepository.findAll();
+        model.addAttribute("stockSessionCapacityByKinds", stockSessionCapacityByKinds);
         return "stockSessionCapacityByKind/index";
     }
 
@@ -42,24 +42,26 @@ public class StockSessionCapacityByKindController {
 
     @RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
     public String editRender(@PathVariable Long id, Model model) {
-        Optional<StockSessionCapacityByKind> StockSessionCapacityByKind = stockSessionCapacityByKindRepository
+        Optional<StockSessionCapacityByKind> stockSessionCapacityByKind = stockSessionCapacityByKindRepository
                 .findById(id);
-        if (StockSessionCapacityByKind.isPresent()) {
+        if (stockSessionCapacityByKind.isPresent()) {
             model.addAttribute("productKinds", productKindRepository.findAll());
-            model.addAttribute("stockSessionCapacityByKind", StockSessionCapacityByKind.get());
+            model.addAttribute("stockSessionCapacityByKind", stockSessionCapacityByKind.get());
             return "stockSessionCapacityByKind/edit";
         }
         return "redirect:/panel/stock-session-capacity-by-kind";
     }
 
     @RequestMapping(path = "/new", method = RequestMethod.POST)
-    public String insert(@ModelAttribute StockSessionCapacityByKind StockSessionCapacityByKind) {
-        stockSessionCapacityByKindRepository.save(StockSessionCapacityByKind);
+    public String insert(@ModelAttribute StockSessionCapacityByKind stockSessionCapacityByKind) {
+        stockSessionCapacityByKindRepository.save(stockSessionCapacityByKind);
         return "redirect:/panel/stock-session-capacity-by-kind";
     }
 
     @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
-    public String update(@PathVariable Long id, @ModelAttribute StockSessionCapacityByKind stockSessionCapacityByKind) {
+    public String update(
+        @PathVariable Long id,
+        @ModelAttribute StockSessionCapacityByKind stockSessionCapacityByKind) {
         Optional<StockSessionCapacityByKind> existing = stockSessionCapacityByKindRepository.findById(id);
         if (existing.isPresent()) {
             StockSessionCapacityByKind updated = existing.get();
