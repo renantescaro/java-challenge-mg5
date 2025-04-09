@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movimentaçõe de estoque</title>
+</head>
+<body>
+    <div th:insert="~{panel}"></div>
+
+
+    <div style="margin: 15px;">
+        <div>
+            <h2>Movimentações de estoque</h2>
+        </div>
+        <br><br>
+        <a
+            class="btn btn-primary"
+            href="/panel/stock-entry/new">
+            Nova movimentação de estoque
+        </a>
+        <br>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Produto</th>
+                    <th>Seção do Estoque</th>
+                    <th>Tipo de Movimentação</th>
+                    <th>Última Modificação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${stocks}">
+                    <td th:text="${item.id}">Código</td>
+                    <td th:text="${item.product.name}">Produto</td>
+                    <td th:text="${item.stockSession.name}">Seção do Estoque</td>
+                    <td th:text="${item.kind}">Tipo Movimentação</td>
+                    <td th:text="${item.lastMovement}">Última Modificação</td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <p th:if="${#lists.isEmpty(stocks)}">
+            Nenhum estoque encontrado.
+        </p>
+    </div>
+
+</body>
+</html>

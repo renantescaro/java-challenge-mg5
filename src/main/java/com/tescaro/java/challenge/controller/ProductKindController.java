@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/panel/product-kind")
 public class ProductKindController {
 
-    private final ProductKindRepository ProductKindRepository;
+    private final ProductKindRepository productKindRepository;
 
-    public ProductKindController(ProductKindRepository ProductKindRepository) {
-        this.ProductKindRepository = ProductKindRepository;
+    public ProductKindController(ProductKindRepository productKindRepository) {
+        this.productKindRepository = productKindRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String listRender(Model model) {
-        List<ProductKind> ProductKinds = ProductKindRepository.findAll();
+        List<ProductKind> ProductKinds = productKindRepository.findAll();
         model.addAttribute("ProductKinds", ProductKinds);
         return "productKind/index";
     }
@@ -36,7 +36,7 @@ public class ProductKindController {
 
     @RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
     public String editRender(@PathVariable Long id, Model model) {
-        Optional<ProductKind> ProductKind = ProductKindRepository.findById(id);
+        Optional<ProductKind> ProductKind = productKindRepository.findById(id);
         if (ProductKind.isPresent()) {
             model.addAttribute("ProductKind", ProductKind.get());
             return "productKind/edit";
@@ -46,27 +46,27 @@ public class ProductKindController {
 
     @RequestMapping(path = "/new", method = RequestMethod.POST)
     public String insert(@ModelAttribute ProductKind ProductKind) {
-        ProductKindRepository.save(ProductKind);
+        productKindRepository.save(ProductKind);
         return "redirect:/panel/product-kind";
     }
 
     @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
     public String update(@PathVariable Long id, @ModelAttribute ProductKind ProductKind) {
-        Optional<ProductKind> existing = ProductKindRepository.findById(id);
+        Optional<ProductKind> existing = productKindRepository.findById(id);
         if (existing.isPresent()) {
             ProductKind updated = existing.get();
             updated.setId(ProductKind.getId());
             updated.setName(ProductKind.getName());
             updated.setSeparateStock(ProductKind.getSeparateStock());
             updated.setCreatedAt(ProductKind.getCreatedAt());
-            ProductKindRepository.save(updated);
+            productKindRepository.save(updated);
         }
         return "redirect:/panel/product-kind";
     }
 
     @RequestMapping(path = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable Long id) {
-        ProductKindRepository.deleteById(id);
+        productKindRepository.deleteById(id);
         return "redirect:/panel/product-kind";
     }
 }

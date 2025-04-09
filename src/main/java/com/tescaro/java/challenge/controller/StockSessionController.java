@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/panel/stock-session")
 public class StockSessionController {
 
-  private final StockSessionRepository StockSessionRepository;
+  private final StockSessionRepository stockSessionRepository;
 
-  public StockSessionController(StockSessionRepository StockSessionRepository) {
-    this.StockSessionRepository = StockSessionRepository;
+  public StockSessionController(StockSessionRepository stockSessionRepository) {
+    this.stockSessionRepository = stockSessionRepository;
   }
 
   @RequestMapping(method = RequestMethod.GET)
   public String listRender(Model model) {
-    List<StockSession> StockSessions = StockSessionRepository.findAll();
-    model.addAttribute("stockSessions", StockSessions);
+    List<StockSession> stockSessions = stockSessionRepository.findAll();
+    model.addAttribute("stockSessions", stockSessions);
     return "stockSession/index";
   }
 
@@ -36,36 +36,36 @@ public class StockSessionController {
 
   @RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
   public String editRender(@PathVariable Long id, Model model) {
-    Optional<StockSession> StockSession = StockSessionRepository.findById(id);
-    if (StockSession.isPresent()) {
-      model.addAttribute("stockSession", StockSession.get());
+    Optional<StockSession> stockSession = stockSessionRepository.findById(id);
+    if (stockSession.isPresent()) {
+      model.addAttribute("stockSession", stockSession.get());
       return "stockSession/edit";
     }
     return "redirect:/panel/stock-session";
   }
 
   @RequestMapping(path = "/new", method = RequestMethod.POST)
-  public String insert(@ModelAttribute StockSession StockSession) {
-    StockSessionRepository.save(StockSession);
+  public String insert(@ModelAttribute StockSession stockSession) {
+    stockSessionRepository.save(stockSession);
     return "redirect:/panel/stock-session";
   }
 
   @RequestMapping(path = "/edit/{id}", method = RequestMethod.POST)
-  public String update(@PathVariable Long id, @ModelAttribute StockSession StockSession) {
-    Optional<StockSession> existing = StockSessionRepository.findById(id);
+  public String update(@PathVariable Long id, @ModelAttribute StockSession stockSession) {
+    Optional<StockSession> existing = stockSessionRepository.findById(id);
     if (existing.isPresent()) {
       StockSession updated = existing.get();
-      updated.setId(StockSession.getId());
-      updated.setName(StockSession.getName());
-      updated.setCreatedAt(StockSession.getCreatedAt());
-      StockSessionRepository.save(updated);
+      updated.setId(stockSession.getId());
+      updated.setName(stockSession.getName());
+      updated.setCreatedAt(stockSession.getCreatedAt());
+      stockSessionRepository.save(updated);
     }
     return "redirect:/panel/stock-session";
   }
 
   @RequestMapping(path = "/delete/{id}", method = RequestMethod.POST)
   public String delete(@PathVariable Long id) {
-    StockSessionRepository.deleteById(id);
+    stockSessionRepository.deleteById(id);
     return "redirect:/panel/stock-session";
   }
 }

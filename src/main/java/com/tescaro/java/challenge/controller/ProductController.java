@@ -29,8 +29,8 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String listRender(Model model) {
-        List<Product> Products = productRepository.findAll();
-        model.addAttribute("products", Products);
+        List<Product> products = productRepository.findAll();
+        model.addAttribute("products", products);
         return "product/index";
     }
 
@@ -43,10 +43,10 @@ public class ProductController {
 
     @RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
     public String editRender(@PathVariable Long id, Model model) {
-        Optional<Product> Product = productRepository.findById(id);
-        if (Product.isPresent()) {
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()) {
             model.addAttribute("productKinds", productKindRepository.findAll());
-            model.addAttribute("product", Product.get());
+            model.addAttribute("product", product.get());
             return "product/edit";
         }
         return "redirect:/panel/product";
